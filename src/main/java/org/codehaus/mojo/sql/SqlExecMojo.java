@@ -1015,14 +1015,14 @@ public class SqlExecMojo
     {
         String line;
 
-        // TODO: Check if this equivalent with if (enableBlockMode) {..
-        if ( delimiterType.equals( DelimiterType.ROW ) )
-        {
-            // no need to parse the content, ship it directly to jdbc in one sql statement
-            line = IOUtil.toString( reader );
-            execSQL( line, out );
-            return;
-        }
+//        // TODO: Check if this equivalent with if (enableBlockMode) {..
+//        if ( delimiterType.equals( DelimiterType.ROW ) )
+//        {
+//            // no need to parse the content, ship it directly to jdbc in one sql statement
+//            line = IOUtil.toString( reader );
+//            execSQL( line, out );
+//            return;
+//        }
 
         StringBuffer sql = new StringBuffer();
 

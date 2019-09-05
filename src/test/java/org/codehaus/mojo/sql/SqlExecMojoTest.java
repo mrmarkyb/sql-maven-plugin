@@ -489,6 +489,20 @@ public class SqlExecMojoTest
         }
     }
 
+    public void testRowDelimiterTypeWorks()
+            throws Exception
+    {
+        String command = "create table GOODROWDELIMTYPE ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)" + "\n/\n"
+                + "create table GOODROWDELIMTYPE2 ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)";
+
+        mojo.addText( command );
+        mojo.setDelimiter( "/" );
+        mojo.setDelimiterType( DelimiterType.ROW );
+
+        mojo.execute();
+        assertEquals( 2, mojo.getSuccessfulStatements() );
+    }
+
     public void test015GoodDelimiterType()
         throws Exception
     {
