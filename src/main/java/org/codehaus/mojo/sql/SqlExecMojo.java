@@ -280,6 +280,9 @@ public class SqlExecMojo
     @Parameter( defaultValue = ON_ERROR_ABORT, property = "onError" )
     private String onError;
 
+    @Parameter(property = "filteredStatements")
+    private List<String> filteredStatements;
+
     ////////////////////////////// Parser Configuration ////////////////////
 
     /**
@@ -1056,6 +1059,9 @@ public class SqlExecMojo
                         continue;
                     }
                 }
+                if( isFilteredStatement(line) ) {
+                    continue;
+                }
             }
 
             if ( !keepFormat )
@@ -1253,6 +1259,10 @@ public class SqlExecMojo
             }
         }
         out.println();
+    }
+
+    public void setFilteredStatements(List<String> filteredStatements) {
+        this.filteredStatements = filteredStatements;
     }
 
     /**
@@ -1536,5 +1546,17 @@ public class SqlExecMojo
     public void setSecurityDispatcher( SecDispatcher securityDispatcher )
     {
         this.securityDispatcher = securityDispatcher;
+    }
+
+    boolean isFilteredStatement(String line) {
+        if(filteredStatements == null) {
+            return false;
+        }
+        for( String filteredStatement : filteredStatements) {
+            if(line.startsWith(filteredStatement)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -26,6 +26,7 @@ import org.junit.runners.MethodSorters;
 import org.sonatype.plexus.components.sec.dispatcher.SecDispatcher;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -489,20 +490,6 @@ public class SqlExecMojoTest
         }
     }
 
-    public void testRowDelimiterTypeWorks()
-            throws Exception
-    {
-        String command = "create table GOODROWDELIMTYPE ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)" + "\n/\n"
-                + "create table GOODROWDELIMTYPE2 ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)";
-
-        mojo.addText( command );
-        mojo.setDelimiter( "/" );
-        mojo.setDelimiterType( DelimiterType.ROW );
-
-        mojo.execute();
-        assertEquals( 2, mojo.getSuccessfulStatements() );
-    }
-
     public void test015GoodDelimiterType()
         throws Exception
     {
@@ -565,5 +552,31 @@ public class SqlExecMojoTest
                 new File("src/test/data/drop-test-tables.sql" )});
         mojo.execute();
         assertEquals(6, mojo.getSuccessfulStatements());
+    }
+
+    public void test028RowDelimiterTypeWorks()
+            throws Exception
+    {
+        String command = "create table GOODROWDELIMTYPE ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)" + "\n/\n"
+                + "create table GOODROWDELIMTYPE2 ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar)";
+
+        mojo.addText( command );
+        mojo.setDelimiter( "/" );
+        mojo.setDelimiterType( DelimiterType.ROW );
+
+        mojo.execute();
+        assertEquals( 2, mojo.getSuccessfulStatements() );
+    }
+
+    public void test029FilteredStatements()
+            throws Exception
+    {
+        String command = "SET DEFINE OFF;\ncreate table FILTEREDSTATEMENTSWORKS ( PERSON_ID integer, FIRSTNAME varchar, LASTNAME varchar);";
+
+        mojo.addText( command );
+        mojo.setFilteredStatements(Arrays.asList("SET DEFINE OFF"));
+
+        mojo.execute();
+        assertEquals( 1, mojo.getSuccessfulStatements() );
     }
 }
