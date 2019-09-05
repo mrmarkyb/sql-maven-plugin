@@ -275,4 +275,20 @@
     </profile>
   </profiles>
 
+    <repositories>
+        <repository>
+            <id>ossrh-snapshots</id>
+            <layout>default</layout>
+            <name>ossrh-snapshots</name>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <checksumPolicy>fail</checksumPolicy>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+
 </project>
